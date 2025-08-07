@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Placas-mãe - Vortex Hardware Systems</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    header.mini-header {
+      background-color: #111;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header.mini-header h1 {
+      font-size: 1.5rem;
+      margin: 0 auto;
+    }
+
+    .back-btn, .cart-icon {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .cart-icon {
+      font-size: 1.3rem;
+    }
+
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .btn-details,
+    .add-to-cart {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      background-color: #111;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-details:hover,
+    .add-to-cart:hover {
+      background-color: #444;
+    }
+
+    .product-details {
+      margin-top: 10px;
+      text-align: left;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    .product-details ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .product-details ul li::before {
+      content: "✓ ";
+      color: rgb(137, 138, 137);
+      font-weight: bold;
+    }
+
+    .next-btn {
+      display: block;
+      margin: 30px auto 60px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .next-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="mini-header">
+    <a href="produtos.html" class="back-btn">&#8592; Voltar</a>
+    <h1>Placas-Mãe</h1>
+    <a href="../pages/carrinho.html" class="cart-icon" title="Ver carrinho">🛒</a>
+  </header>
+
+  <main>
+    <div class="products-container">
+
+      <div class="product-card">
+        <img src="../assets/b550.jpg" alt="ASUS ROG B550-F Gaming">
+        <h3>ASUS ROG B550-F Gaming</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Socket: AM4</li>
+            <li>Chipset: B550</li>
+            <li>Memória Máxima: 128GB DDR4</li>
+            <li>Slots PCIe 4.0: 1x x16</li>
+            <li>Formato: ATX</li>
+          </ul>
+        </div>
+        <button class="add-to-cart"
+          onclick="adicionarAoCarrinho('ASUS ROG B550-F Gaming', 1500.00, '../assets/b550.jpg')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+
+      <div class="product-card">
+        <img src="../assets/z790.jpg" alt="MSI MAG Z790 Tomahawk">
+        <h3>MSI MAG Z790 Tomahawk</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Socket: LGA 1700</li>
+            <li>Chipset: Z790</li>
+            <li>Memória Máxima: 128GB DDR5</li>
+            <li>Slots PCIe 5.0: 1x x16</li>
+            <li>Formato: ATX</li>
+          </ul>
+        </div>
+        <button class="add-to-cart"
+          onclick="adicionarAoCarrinho('MSI MAG Z790 Tomahawk', 2800.00, '../assets/z790.jpg')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+
+    </div>
+
+    <button class="next-btn" onclick="window.location.href='memorias.html'">Avançar para Memórias</button>
+  </main>
+
+  <script>
+    // Toggle detalhes
+    const detailButtons = document.querySelectorAll('.btn-details');
+    detailButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const details = button.nextElementSibling;
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+        button.textContent = isVisible ? 'Ver detalhes' : 'Ver menos';
+      });
+    });
+
+    // Adicionar ao carrinho com controle de quantidade
+    function adicionarAoCarrinho(nome, preco, imagem) {
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      // Verifica se já tem o produto no carrinho
+      const index = carrinho.findIndex(item => item.nome === nome);
+      if(index > -1) {
+        carrinho[index].quantidade++;
+      } else {
+        carrinho.push({ nome, preco, imagem, quantidade: 1 });
+      }
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      alert(`${nome} adicionado ao carrinho! Quantidade: ${carrinho[index > -1 ? index : carrinho.length - 1].quantidade}`);
+    }
+  </script>
+
+</body>
+</html>

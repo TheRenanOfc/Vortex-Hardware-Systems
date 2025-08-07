@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produtos - Vortex Hardware Systems</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+ <header>
+  <div class="header-content">
+    <h1 class="logo">Vortex Hardware Systems</h1>
+
+    <nav class="main-nav">
+       <ul>
+        <li><a href="../index.html">Início</a></li>
+        <li><a href="produtos.html" class="active">Produtos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+
+      </ul>
+    </nav>
+
+    <a href="/pages/carrinho.html" class="cart-icon" aria-label="Carrinho de Compras">🛒</a>
+
+  </div>
+
+  <button id="menu-btn" aria-label="Menu">&#9776;</button>
+  <nav id="menu" class="hidden">
+    <ul>
+      <li><a href="index.html">Início</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <main>
+    <h2>Monte sua máquina peça por peça</h2>
+    <p>Escolha uma categoria:</p>
+
+    <section class="card-container">
+      <div class="card" onclick="window.location.href='processadores.html'">
+        <img src="../assets/processador.png" alt="Processadores" class="card-img" />
+        <h3>Processadores</h3>
+        <p>CPUs de alta performance</p>
+      </div>
+      <div class="card" onclick="window.location.href='placas-mae.html'">
+        <img src="../assets/placa-mae.png" alt="Placas-Mãe" class="card-img" />
+        <h3>Placas-Mãe</h3>
+        <p>Compatibilidade e performance</p>
+      </div>
+      <div class="card" onclick="window.location.href='memorias.html'">
+        <img src="../assets/memoria-ram.png" alt="Memórias RAM" class="card-img" />
+        <h3>Memórias RAM</h3>
+        <p>Rapidez e estabilidade</p>
+      </div>
+      <div class="card" onclick="window.location.href='placas-de-video.html'">
+        <img src="../assets/placa-video.png" alt="Placas de Vídeo" class="card-img" />
+        <h3>Placas de Vídeo</h3>
+        <p>Potência gráfica extrema</p>
+      </div>
+      <div class="card" onclick="window.location.href='armazenamento.html'">
+        <img src="../assets/armazenamento.png" alt="Armazenamento" class="card-img" />
+        <h3>Armazenamento</h3>
+        <p>SSDs e HDs</p>
+      </div>
+      <div class="card" onclick="window.location.href='gabinetes.html'">
+        <img src="../assets/gabinete.png" alt="Gabinetes" class="card-img" />
+        <h3>Gabinetes</h3>
+        <p>Design e resfriamento</p>
+      </div>
+      <div class="card" onclick="window.location.href='fontes.html'">
+        <img src="../assets/fonte.png" alt="Fontes" class="card-img" />
+        <h3>Fontes</h3>
+        <p>Energia estável</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vortex Hardware Systems. Todos os direitos reservados.</p>
+  </footer>
+  <script>
+  let prevScroll = window.pageYOffset;
+  const header = document.querySelector("header");
+
+  window.onscroll = () => {
+    let currentScroll = window.pageYOffset;
+    if (prevScroll > currentScroll) {
+      header.style.top = "0"; // mostra
+    } else {
+      header.style.top = "-120px"; // esconde
+    }
+    prevScroll = currentScroll;
+  };
+</script>
+
+
+</body>
+</html>

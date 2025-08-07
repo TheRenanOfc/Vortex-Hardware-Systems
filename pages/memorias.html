@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Memórias RAM - Vortex Hardware Systems</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    header.mini-header {
+      background-color: #111;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header.mini-header h1 {
+      font-size: 1.5rem;
+      margin: 0 auto;
+    }
+    .back-btn, .cart-icon {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .cart-icon {
+      font-size: 1.3rem;
+    }
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .btn-details,
+    .add-to-cart {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      background-color: #111;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn-details:hover,
+    .add-to-cart:hover {
+      background-color: #444;
+    }
+    .product-details {
+      margin-top: 10px;
+      text-align: left;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: none;
+      font-size: 0.9rem;
+    }
+    .product-details ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .product-details ul li::before {
+      content: "✓ ";
+      color: rgb(137, 138, 137);
+      font-weight: bold;
+    }
+    .next-btn {
+      display: block;
+      margin: 30px auto 60px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      max-width: 300px;
+      text-align: center;
+    }
+    .next-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header class="mini-header">
+    <a href="produtos.html" class="back-btn">&#8592; Voltar</a>
+    <h1>Memórias RAM</h1>
+    <a href="../pages/carrinho.html" class="cart-icon" title="Ver carrinho">🛒</a>
+  </header>
+
+  <main>
+    <div class="products-container">
+
+      <div class="product-card">
+        <img src="../assets/corsair-vengeance.jpg" alt="Corsair Vengeance 16GB DDR5">
+        <h3>Corsair Vengeance 16GB DDR5</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Capacidade: 16GB (2x8GB)</li>
+            <li>Tipo: DDR5</li>
+            <li>Frequência: 5200 MHz</li>
+            <li>Latência: CL40</li>
+            <li>RGB: Sim</li>
+          </ul>
+        </div>
+        <button class="add-to-cart"
+          onclick="adicionarAoCarrinho('Corsair Vengeance 16GB DDR5', 620.00, '../assets/corsair-vengeance.jpg')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+
+      <div class="product-card">
+        <img src="../assets/kingston-fury.jpg" alt="Kingston Fury Beast 32GB DDR4">
+        <h3>Kingston Fury Beast 32GB DDR4</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Capacidade: 32GB (2x16GB)</li>
+            <li>Tipo: DDR4</li>
+            <li>Frequência: 3600 MHz</li>
+            <li>Latência: CL18</li>
+            <li>RGB: Não</li>
+          </ul>
+        </div>
+        <button class="add-to-cart"
+          onclick="adicionarAoCarrinho('Kingston Fury Beast 32GB DDR4', 450.00, '../assets/kingston-fury.jpg')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+
+    </div>
+
+    <button class="next-btn" onclick="window.location.href='placas-de-video.html'">Avançar para Placas de Vídeo</button>
+  </main>
+
+  <script>
+    // Toggle detalhes
+    const detailButtons = document.querySelectorAll('.btn-details');
+    detailButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const details = button.nextElementSibling;
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+        button.textContent = isVisible ? 'Ver detalhes' : 'Ver menos';
+      });
+    });
+
+    // Adicionar ao carrinho com controle de quantidade
+    function adicionarAoCarrinho(nome, preco, imagem) {
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      const index = carrinho.findIndex(item => item.nome === nome);
+      if(index > -1) {
+        carrinho[index].quantidade++;
+      } else {
+        carrinho.push({ nome, preco, imagem, quantidade: 1 });
+      }
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      alert(`${nome} adicionado ao carrinho! Quantidade: ${carrinho[index > -1 ? index : carrinho.length - 1].quantidade}`);
+    }
+  </script>
+</body>
+</html>

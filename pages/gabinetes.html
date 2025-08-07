@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gabinetes - Vortex Hardware</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .product-details {
+      margin-top: 10px;
+      text-align: left;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: none;
+    }
+    .product-details ul {
+      padding-left: 20px;
+    }
+    .product-details ul li::before {
+      content: "✓ ";
+      color: rgb(137, 138, 137);
+      font-weight: bold;
+    }
+    .next-btn {
+      display: block;
+      margin: 30px auto 60px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      max-width: 300px;
+      text-align: center;
+    }
+    .next-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+ <header class="mini-header">
+  <a href="produtos.html" class="back-btn" title="Voltar">
+    &#8592; Voltar
+  </a>
+  <h1>Gabinetes</h1>
+</header>
+  <main>
+    <h2>Escolha seu gabinete ideal</h2>
+    <div class="products-container">
+      <div class="product-card">
+        <img src="../assets/gabinete.png" alt="Gabinete ATX Gamer" />
+        <h3>Gabinete ATX Gamer</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Formato: ATX Mid Tower</li>
+            <li>Compatível com placas-mãe ATX, Micro-ATX, Mini-ITX</li>
+            <li>Suporte para até 6 ventoinhas</li>
+            <li>Painel frontal com USB 3.0 e áudio</li>
+            <li>Vidro temperado lateral</li>
+          </ul>
+        </div>
+        <button class="btn-cart"
+          onclick="adicionarAoCarrinho('Gabinete ATX Gamer', 450.00, '../assets/gabinete.png')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+    </div>
+
+    <button class="next-btn" onclick="window.location.href='fontes.html'">Avançar para Fontes</button>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vortex Hardware Systems</p>
+  </footer>
+
+  <script>
+    // Mostrar/esconder detalhes
+    document.querySelectorAll('.btn-details').forEach(button => {
+      button.addEventListener('click', () => {
+        const details = button.nextElementSibling;
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+        button.textContent = isVisible ? 'Ver detalhes' : 'Ver menos';
+      });
+    });
+
+    // Adicionar ao carrinho
+    function adicionarAoCarrinho(nome, preco, imagem) {
+      const item = { nome, preco, imagem, quantidade: 1 };
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      carrinho.push(item);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      alert(`${nome} adicionado ao carrinho!`);
+    }
+  </script>
+</body>
+</html>

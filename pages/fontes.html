@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fontes - Vortex Hardware</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .product-details {
+      margin-top: 10px;
+      text-align: left;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: none;
+    }
+    .product-details ul {
+      padding-left: 20px;
+    }
+    .product-details ul li::before {
+      content: "✓ ";
+      color: rgb(137, 138, 137);
+      font-weight: bold;
+    }
+
+    /* Painel de navegação */
+    .navigation-panel {
+      margin: 50px auto 80px;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .nav-btn {
+      flex: 1;
+      padding: 12px 0;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+    }
+    .nav-btn:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+ <header class="mini-header">
+  <a href="produtos.html" class="back-btn" title="Voltar">
+    &#8592; Voltar
+  </a>
+  <h1>Fontes</h1>
+</header>
+
+  <main>
+    <h2>Fontes confiáveis e potentes</h2>
+    <div class="products-container">
+      <div class="product-card">
+        <img src="../assets/fonte.png" alt="Fonte 650W 80 Plus" />
+        <h3>Fonte 650W 80 Plus</h3>
+        <button class="btn-details">Ver detalhes</button>
+        <div class="product-details">
+          <ul>
+            <li>Potência: 650W</li>
+            <li>Certificação 80 Plus Bronze</li>
+            <li>Modularidade: Semi-modular</li>
+            <li>Ventoinha silenciosa de 120mm</li>
+            <li>Proteções contra sobrecarga e curto-circuito</li>
+          </ul>
+        </div>
+        <button class="btn-cart"
+          onclick="adicionarAoCarrinho('Fonte 650W 80 Plus', 320.00, '../assets/fonte.png')">
+          Adicionar ao carrinho
+        </button>
+      </div>
+    </div>
+
+    <!-- Painel de navegação -->
+    <div class="navigation-panel">
+      <button class="nav-btn" onclick="window.location.href='../index.html'">Início</button>
+      <button class="nav-btn" onclick="window.location.href='produtos.html'">Produtos</button>
+      <button class="nav-btn" onclick="window.location.href='../pages/carrinho.html'">Carrinho</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vortex Hardware Systems</p>
+  </footer>
+
+  <script>
+    // Mostrar/esconder detalhes
+    document.querySelectorAll('.btn-details').forEach(button => {
+      button.addEventListener('click', () => {
+        const details = button.nextElementSibling;
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+        button.textContent = isVisible ? 'Ver detalhes' : 'Ver menos';
+      });
+    });
+
+    // Adicionar ao carrinho
+    function adicionarAoCarrinho(nome, preco, imagem) {
+      const item = { nome, preco, imagem, quantidade: 1 };
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      carrinho.push(item);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      alert(`${nome} adicionado ao carrinho!`);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carrinho - Vortex Hardware Systems</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+
+    header.mini-header {
+      background-color: #111;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header.mini-header h1 {
+      font-size: 1.5rem;
+      margin: 0 auto;
+    }
+
+    .back-btn, .cart-icon {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .cart-icon {
+      font-size: 1.3rem;
+    }
+
+    .cart-items {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 6px;
+      margin-right: 15px;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-details h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+    }
+
+    .cart-item-details p {
+      margin: 2px 0;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      margin-left: 15px;
+      font-size: 1rem;
+    }
+
+    .cart-item-quantity button {
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      width: 26px;
+      height: 26px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .cart-item-quantity button:hover {
+      background-color: #333;
+    }
+
+    .cart-item-quantity span {
+      min-width: 22px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #totalPrice {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-align: right;
+      margin-bottom: 20px;
+      color: #111;
+    }
+
+    #finalizarCompraBtn {
+      display: block;
+      margin: 0 auto 40px;
+      background-color: #111;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      max-width: 250px;
+      text-align: center;
+    }
+
+    #finalizarCompraBtn:hover {
+      background-color: #333;
+    }
+
+    #benchmarkChart {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      max-width: 100%;
+      margin: 0 auto 50px;
+      display: block;
+    }
+
+    .empty-message {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #555;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="mini-header">
+    <a href="produtos.html" class="back-btn">&#8592; Voltar</a>
+    <h1>Meu Carrinho</h1>
+    <a href="../pages/carrinho.html" class="cart-icon" title="Ver carrinho">🛒</a>
+  </header>
+
+  <main>
+    <section class="cart-items" id="cartItemsContainer">
+      <!-- Itens do carrinho aparecem aqui -->
+    </section>
+
+    <div id="totalPrice"></div>
+
+    <button id="finalizarCompraBtn">Finalizar Compra</button>
+
+    <canvas id="benchmarkChart" width="700" height="470"></canvas>
+  </main>
+
+  <script>
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const totalPriceElem = document.getElementById('totalPrice');
+    const finalizarCompraBtn = document.getElementById('finalizarCompraBtn');
+    const ctx = document.getElementById('benchmarkChart').getContext('2d');
+
+    let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    let chart = null;
+    const benchmarkScores = {
+      'Intel Core i9-14900K': 9700,
+      'AMD Ryzen 9 7950X': 9300,
+      'Corsair Vengeance 16GB DDR5': 5200,
+      'Kingston Fury Beast 32GB DDR4': 3600
+    };
+
+    function atualizarLocalStorage() {
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    }
+
+    function calcularTotal() {
+      return carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+    }
+
+    function atualizarTotal() {
+      const total = calcularTotal();
+      totalPriceElem.textContent = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function renderizarCarrinho() {
+      cartItemsContainer.innerHTML = '';
+      if (carrinho.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-message">Seu carrinho está vazio.</p>';
+        totalPriceElem.textContent = '';
+        document.getElementById('benchmarkChart').style.display = 'none';
+        finalizarCompraBtn.style.display = 'none';
+        if(chart) {
+          chart.destroy();
+          chart = null;
+        }
+        return;
+      }
+
+      document.getElementById('benchmarkChart').style.display = 'block';
+      finalizarCompraBtn.style.display = 'block';
+
+      carrinho.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img src="${item.imagem}" alt="${item.nome}" />
+          <div class="cart-item-details">
+            <h3>${item.nome}</h3>
+            <p>Preço: R$ ${item.preco.toFixed(2)}</p>
+          </div>
+          <div class="cart-item-quantity">
+            <button class="btn-decrease" data-index="${index}">−</button>
+            <span>${item.quantidade}</span>
+            <button class="btn-increase" data-index="${index}">+</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      atualizarTotal();
+      configurarEventosQuantidade();
+      criarGrafico();
+    }
+
+    function configurarEventosQuantidade() {
+      const btnsIncrease = document.querySelectorAll('.btn-increase');
+      const btnsDecrease = document.querySelectorAll('.btn-decrease');
+
+      btnsIncrease.forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.getAttribute('data-index'));
+          carrinho[idx].quantidade++;
+          atualizarLocalStorage();
+          renderizarCarrinho();
+        };
+      });
+
+      btnsDecrease.forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.getAttribute('data-index'));
+          if (carrinho[idx].quantidade > 1) {
+            carrinho[idx].quantidade--;
+          } else {
+            carrinho.splice(idx, 1);
+          }
+          atualizarLocalStorage();
+          renderizarCarrinho();
+        };
+      });
+    }
+
+    function drawImages(chart) {
+      const xAxis = chart.scales.x;
+      const ctx = chart.ctx;
+      const imgSize = 70;
+      const yPos = xAxis.bottom + 10;
+
+      carrinho.forEach((item, index) => {
+        const img = new Image();
+        img.src = item.imagem;
+        img.onload = () => {
+          const x = xAxis.getPixelForTick(index) - imgSize / 2;
+          ctx.drawImage(img, x, yPos, imgSize, imgSize);
+        };
+      });
+    }
+
+    function criarGrafico() {
+      if(chart) {
+        chart.destroy();
+      }
+
+      const labels = carrinho.map(item => item.nome);
+      const dataScores = carrinho.map(item => benchmarkScores[item.nome] || 0);
+
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Pontuação de Benchmark',
+            data: dataScores,
+            backgroundColor: 'rgba(17,17,17,0.7)',
+            borderColor: '#111',
+            borderWidth: 1,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: false,
+          layout: {
+            padding: {
+              bottom: 90
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          animation: {
+            onComplete: () => {
+              drawImages(chart);
+            }
+          },
+          plugins: {
+            legend: {
+              display: true
+            }
+          }
+        }
+      });
+    }
+
+    finalizarCompraBtn.onclick = () => {
+      if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio. Adicione produtos para finalizar a compra.');
+        return;
+      }
+      alert(`Compra finalizada! Total: R$ ${calcularTotal().toFixed(2)}. Obrigado pela preferência!`);
+      carrinho = [];
+      atualizarLocalStorage();
+      renderizarCarrinho();
+      window.location.href = '../index.html'; // Redireciona para a página inicial
+    };
+
+    renderizarCarrinho();
+  </script>
+
+</body>
+</html>
