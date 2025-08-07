@@ -557,6 +557,7 @@ main {
   .benefits-container {
     flex-direction: column;
   }
+}
 
 .parallax-section {
   background-image: url('../assets/performance-bg.gif'); /* Substitua pelo nome correto do seu GIF */
@@ -922,8 +923,3 @@ body {
   margin: 0;
   font-size: 1.5rem;
 }
-
-
-
-
-
