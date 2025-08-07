@@ -83,9 +83,3 @@ Este projeto está sob a Licença MIT – consulte o arquivo [LICENSE](LICENSE) 
 **Flavio**
 [GitHub: @FlavioBenevenuto](https://github.com/FlavioBenevenuto)  
 Projeto acadêmico desenvolvido em 2025.
-├── pages/
-│ ├── produtos.html # Página de listagem de produtos
-│ ├── contato.html # Página de contato
-│ └── carrinho.html # Página de carrinho
-├── index.html # Página inicial
-└── README.md # Documentação do projeto
