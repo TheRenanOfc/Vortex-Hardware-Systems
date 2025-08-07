@@ -585,6 +585,7 @@ main {
   z-index: 2;
   position: relative;
   padding: 20px;
+}
 
 .parallax-content h2 {
   font-size: 32px;
@@ -921,6 +922,7 @@ body {
   margin: 0;
   font-size: 1.5rem;
 }
+
 
 
 
