@@ -78,7 +78,7 @@ Este projeto está sob a Licença MIT – consulte o arquivo [LICENSE](LICENSE) 
 
 ## 👨‍💻 Autores
 
-**Renan**  
+**Renan**
 [GitHub: @TheRenanOfc](https://github.com/TheRenanOfc)  
 **Flavio**
 [GitHub: @FlavioBenevenuto](https://github.com/FlavioBenevenuto)  
