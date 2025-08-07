@@ -559,31 +559,32 @@ main {
   }
 
 .parallax-section {
-  background-image: url('https://media.giphy.com/media/LnLKfGDt0rX0E/giphy.gif');
+  background-image: url('../assets/performance-bg.gif'); /* Substitua pelo nome correto do seu GIF */
   background-size: cover;
   background-position: center;
   height: 300px;
-  position: relative;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .parallax-section::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.85));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
   z-index: 0;
 }
 
 .parallax-content {
   z-index: 2;
   position: relative;
-}
-
+  padding: 20px;
 
 .parallax-content h2 {
   font-size: 32px;
@@ -920,6 +921,7 @@ body {
   margin: 0;
   font-size: 1.5rem;
 }
+
 
 
 
