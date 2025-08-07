@@ -70,18 +70,6 @@ Este projeto é uma representação fictícia e **não possui fins comerciais**.
 
 ---
 
-## 🧠 Aprendizados
-
-Durante o desenvolvimento deste projeto, foram aprofundados os seguintes conceitos:
-
-- Organização de arquivos e rotas para publicação em ambientes externos
-- Separação de responsabilidades entre estrutura, estilo e lógica
-- Implementação de funcionalidades interativas com JavaScript puro
-- Técnicas de manipulação de DOM e eventos
-- Prática com animações, responsividade e usabilidade
-
----
-
 ## 📄 Licença
 
 Este projeto está sob a Licença MIT – consulte o arquivo [LICENSE](LICENSE) para mais informações.
