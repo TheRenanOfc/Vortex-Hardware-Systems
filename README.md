@@ -83,17 +83,6 @@ Este projeto está sob a Licença MIT – consulte o arquivo [LICENSE](LICENSE) 
 **Flavio**
 [GitHub: @FlavioBenevenuto](https://github.com/FlavioBenevenuto)  
 Projeto acadêmico desenvolvido em 2025.
-
-
-## 📂 Estrutura do Projeto
-Vortex-Hardware-Systems/
-│
-├── assets/ # Imagens e ilustrações
-├── css/
-│ └── style.css # Estilos principais
-├── js/
-│ ├── main.js # Funções gerais do site
-│ └── carrinho.js # Lógica de carrinho de compras
 ├── pages/
 │ ├── produtos.html # Página de listagem de produtos
 │ ├── contato.html # Página de contato
