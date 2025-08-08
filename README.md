@@ -44,7 +44,7 @@ Acesse o projeto publicado via GitHub Pages:
 
 ---
 
-## 🧪 Funcionalidades Implementadas
+## ⚙ Funcionalidades Implementadas
 
 -  Página inicial com introdução institucional e seções interativas
 -  Catálogo de produtos com imagens, descrições e botões de adicionar ao carrinho
