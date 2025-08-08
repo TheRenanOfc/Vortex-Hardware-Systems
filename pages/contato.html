@@ -10,62 +10,57 @@
 <body>
 
   <header>
-  <div class="header-content">
-    <h1 class="logo">Vortex Hardware Systems</h1>
+    <div class="header-content">
+      <h1 class="logo">Vortex Hardware Systems</h1>
 
-    <nav class="main-nav">
+      <nav class="main-nav">
+        <ul>
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="contato.html" class="active">Contato</a></li>
+        </ul>
+      </nav>
+
+      <a href="/Vortex-Hardware-Systems/pages/carrinho.html" class="cart-icon" aria-label="Carrinho de Compras">🛒</a>
+    </div>
+
+    <button id="menu-btn" aria-label="Menu">&#9776;</button>
+    <nav id="menu" class="hidden">
       <ul>
-      <li><a href="../index.html">Início</a></li>
-      <li><a href="produtos.html">Produtos</a></li>
-      <li><a href="contato.html" class="active">Contato</a></li>
-
+        <li><a href="index.html">Início</a></li>
       </ul>
     </nav>
-
-    <a href="/Vortex-Hardware-Systems/pages/carrinho.html" class="cart-icon" aria-label="Carrinho de Compras">🛒</a>
-
-  </div>
-
-  <button id="menu-btn" aria-label="Menu">&#9776;</button>
-  <nav id="menu" class="hidden">
-    <ul>
-      <li><a href="index.html">Início</a></li>
-    </ul>
-  </nav>
-</header>
+  </header>
 
   <main>
-   <main>
-  <section class="contato-section fade-in">
-    <div class="contato-content">
-      <h2>Fale com a gente</h2>
-      <p>Tem dúvidas, sugestões ou precisa de ajuda? Envie uma mensagem e responderemos em breve.</p>
+    <section class="contato-section fade-in">
+      <div class="contato-content">
+        <h2>Fale com a gente</h2>
+        <p>Tem dúvidas, sugestões ou precisa de ajuda? Envie uma mensagem e responderemos em breve.</p>
 
-      <form action="#" method="post" class="contato-form">
-        <input type="text" name="nome" placeholder="Seu nome" required />
-        <input type="email" name="email" placeholder="Seu e-mail" required />
-        <textarea name="mensagem" rows="5" placeholder="Sua mensagem..." required></textarea>
-        <button type="submit">Enviar</button>
-      </form>
-    </div>
-  </section>
+        <!-- Formulário com redirecionamento -->
+        <form onsubmit="window.location.href='erro405.html'; return false;" class="contato-form">
+          <input type="text" name="nome" placeholder="Seu nome" required />
+          <input type="email" name="email" placeholder="Seu e-mail" required />
+          <textarea name="mensagem" rows="5" placeholder="Sua mensagem..." required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </section>
 
-  <!-- NOVO BLOCO ADICIONAL -->
-  <section class="info-contato-section fade-in">
-    <div class="info-box">
-      <img src="../assets/suporte.png" alt="Atendimento" />
-      <h3>Atendimento direto</h3>
-      <p>Nosso suporte está disponível em horário comercial via WhatsApp e email. Resposta rápida e sem enrolação.</p>
-      <ul>
-        <li><strong>Email:</strong> suporte@vortexhardware.com</li>
-        <li><strong>WhatsApp:</strong> (41) 91234-5678</li>
-        <li><strong>Endereço:</strong> Alameda Bom Pastor, 6024 – Campina, São José dos Pinhais - PR
-</li>
-      </ul>
-    </div>
-  </section>
-</main>
-
+    <!-- Bloco informativo -->
+    <section class="info-contato-section fade-in">
+      <div class="info-box">
+        <img src="../assets/suporte.png" alt="Atendimento" />
+        <h3>Atendimento direto</h3>
+        <p>Nosso suporte está disponível em horário comercial via WhatsApp e email. Resposta rápida e sem enrolação.</p>
+        <ul>
+          <li><strong>Email:</strong> suporte@vortexhardware.com</li>
+          <li><strong>WhatsApp:</strong> (41) 91234-5678</li>
+          <li><strong>Endereço:</strong> Alameda Bom Pastor, 6024 – Campina, São José dos Pinhais - PR</li>
+        </ul>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -73,6 +68,7 @@
   </footer>
 
   <script>
+    // Animações com ScrollReveal
     ScrollReveal().reveal('.fade-in', {
       delay: 200,
       distance: '40px',
@@ -88,14 +84,9 @@
 
     window.onscroll = () => {
       let currentScroll = window.pageYOffset;
-      if (prevScroll > currentScroll) {
-        header.style.top = "0";
-      } else {
-        header.style.top = "-120px";
-      }
+      header.style.top = prevScroll > currentScroll ? "0" : "-120px";
       prevScroll = currentScroll;
     };
   </script>
 </body>
 </html>
-
