@@ -46,15 +46,15 @@ Acesse o projeto publicado via GitHub Pages:
 
 ## 🧪 Funcionalidades Implementadas
 
-- ✔️ Página inicial com introdução institucional e seções interativas
-- ✔️ Catálogo de produtos com imagens, descrições e botões de adicionar ao carrinho
-- ✔️ Carrinho dinâmico com possibilidade de ajuste de quantidades e remoção
-- ✔️ Cálculo automático do valor total
-- ✔️ Gráfico de benchmarks de produtos adicionados
-- ✔️ Imagens dos produtos diretamente no gráfico
-- ✔️ Simulação de finalização da compra com confirmação
-- ✔️ Navegação simples e intuitiva entre as páginas
-- ✔️ Design adaptável a diferentes dispositivos (responsivo)
+-  Página inicial com introdução institucional e seções interativas
+-  Catálogo de produtos com imagens, descrições e botões de adicionar ao carrinho
+-  Carrinho dinâmico com possibilidade de ajuste de quantidades e remoção
+-  Cálculo automático do valor total
+-  Gráfico de benchmarks de produtos adicionados
+-  Imagens dos produtos diretamente no gráfico
+-  Simulação de finalização da compra com confirmação
+-  Navegação simples e intuitiva entre as páginas
+-  Design adaptável a diferentes dispositivos (responsivo)
 
 ---
 
