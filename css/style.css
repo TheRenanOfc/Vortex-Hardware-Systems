@@ -5,18 +5,28 @@ body {
   background-color: #f2f2f2;
   color: #333;
 }
+
 header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #111;
-  color: #fff;
+  width: 100%;
+  z-index: 1000;
   padding: 20px;
   text-align: center;
-  z-index: 1000;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ), 
+    url('../assets/header-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
 header h1 {
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 2px;
@@ -930,4 +940,5 @@ body {
   margin: 0;
   font-size: 1.5rem;
 }
+
 
