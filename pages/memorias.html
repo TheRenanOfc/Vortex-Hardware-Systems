@@ -106,6 +106,56 @@
     .next-btn:hover {
       background-color: #333;
     }
+
+    /* TOAST STYLES - adaptado para o popup mais bonito */
+    #toast-container {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .toast {
+      display: flex;
+      align-items: center;
+      background-color: #111;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: slideIn 0.4s ease, fadeOut 0.5s ease 3.5s forwards;
+      min-width: 280px;
+      max-width: 340px;
+    }
+    .toast img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+    .toast-content {
+      flex: 1;
+    }
+    .toast-content h4 {
+      margin: 0;
+      font-size: 15px;
+      color: #0f9;
+    }
+    .toast-content p {
+      margin: 2px 0 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: translateX(100%); }
+    }
   </style>
 </head>
 <body>
@@ -114,6 +164,8 @@
     <h1>Memórias RAM</h1>
     <a href="../pages/carrinho.html" class="cart-icon" title="Ver carrinho">🛒</a>
   </header>
+
+  <div id="toast-container"></div>
 
   <main>
     <div class="products-container">
@@ -162,7 +214,6 @@
   </main>
 
   <script>
-    // Toggle detalhes
     const detailButtons = document.querySelectorAll('.btn-details');
     detailButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -173,17 +224,31 @@
       });
     });
 
-    // Adicionar ao carrinho com controle de quantidade
     function adicionarAoCarrinho(nome, preco, imagem) {
       let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
       const index = carrinho.findIndex(item => item.nome === nome);
-      if(index > -1) {
+      if (index > -1) {
         carrinho[index].quantidade++;
       } else {
         carrinho.push({ nome, preco, imagem, quantidade: 1 });
       }
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      alert(`${nome} adicionado ao carrinho! Quantidade: ${carrinho[index > -1 ? index : carrinho.length - 1].quantidade}`);
+      mostrarToast(nome, imagem);
+    }
+
+    function mostrarToast(nome, imagem) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <img src="${imagem}" alt="${nome}">
+        <div class="toast-text"><strong>${nome}</strong><br>adicionado ao carrinho</div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
     }
   </script>
 </body>

@@ -157,6 +157,55 @@
       color: #555;
       margin: 40px 0;
     }
+
+    /* Modal estilizado */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h2 {
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .modal-content p {
+      color: #444;
+      font-size: 1rem;
+    }
+
+    .modal-content button {
+      margin-top: 25px;
+      background-color: #111;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background-color: #333;
+    }
   </style>
 </head>
 <body>
@@ -168,25 +217,32 @@
   </header>
 
   <main>
-    <section class="cart-items" id="cartItemsContainer">
-      <!-- Itens do carrinho aparecem aqui -->
-    </section>
-
+    <section class="cart-items" id="cartItemsContainer"></section>
     <div id="totalPrice"></div>
-
     <button id="finalizarCompraBtn">Finalizar Compra</button>
-
     <canvas id="benchmarkChart" width="700" height="470"></canvas>
   </main>
+
+  <!-- Modal -->
+  <div id="customModal" class="modal">
+    <div class="modal-content">
+      <h2>Compra Finalizada!</h2>
+      <p id="modalText">Obrigado pela preferência.</p>
+      <button onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
 
   <script>
     const cartItemsContainer = document.getElementById('cartItemsContainer');
     const totalPriceElem = document.getElementById('totalPrice');
     const finalizarCompraBtn = document.getElementById('finalizarCompraBtn');
     const ctx = document.getElementById('benchmarkChart').getContext('2d');
+    const modal = document.getElementById('customModal');
+    const modalText = document.getElementById('modalText');
 
     let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
     let chart = null;
+
     const benchmarkScores = {
       'Intel Core i9-14900K': 9700,
       'AMD Ryzen 9 7950X': 9300,
@@ -214,7 +270,7 @@
         totalPriceElem.textContent = '';
         document.getElementById('benchmarkChart').style.display = 'none';
         finalizarCompraBtn.style.display = 'none';
-        if(chart) {
+        if (chart) {
           chart.destroy();
           chart = null;
         }
@@ -291,7 +347,7 @@
     }
 
     function criarGrafico() {
-      if(chart) {
+      if (chart) {
         chart.destroy();
       }
 
@@ -342,15 +398,22 @@
         alert('Seu carrinho está vazio. Adicione produtos para finalizar a compra.');
         return;
       }
-      alert(`Compra finalizada! Total: R$ ${calcularTotal().toFixed(2)}. Obrigado pela preferência!`);
+
+      const total = calcularTotal();
+      modalText.textContent = `Total: R$ ${total.toFixed(2)}. Obrigado pela preferência!`;
+      modal.style.display = 'block';
+
       carrinho = [];
       atualizarLocalStorage();
       renderizarCarrinho();
-      window.location.href = '../index.html'; // Redireciona para a página inicial
     };
+
+    function closeModal() {
+      modal.style.display = 'none';
+      window.location.href = '../index.html';
+    }
 
     renderizarCarrinho();
   </script>
-
 </body>
 </html>

@@ -941,4 +941,12 @@ body {
   font-size: 1.5rem;
 }
 
+* {
+  box-sizing: border-box;
+}
 
+body {
+  overflow-x: hidden; /* esconde a rolagem lateral */
+  margin: 0;
+  padding: 0;
+}

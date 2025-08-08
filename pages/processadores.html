@@ -17,24 +17,16 @@
       top: 0;
       z-index: 1000;
     }
-
     header.mini-header h1 {
       font-size: 1.5rem;
       margin: 0 auto;
     }
-
-    .back-btn {
+    .back-btn, .cart-icon {
       color: white;
       text-decoration: none;
       font-size: 1.2rem;
+      cursor: pointer;
     }
-
-    .cart-icon {
-      color: white;
-      font-size: 1.3rem;
-      text-decoration: none;
-    }
-
     .products-container {
       display: flex;
       flex-wrap: wrap;
@@ -42,7 +34,6 @@
       justify-content: center;
       padding: 40px 20px;
     }
-
     .product-card {
       background-color: #fff;
       border: 1px solid #ddd;
@@ -52,20 +43,17 @@
       text-align: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       transition: transform 0.3s;
+      position: relative;
     }
-
     .product-card:hover {
       transform: translateY(-5px);
     }
-
     .product-card img {
       max-width: 100%;
       height: auto;
       border-radius: 4px;
     }
-
-    .btn-details,
-    .add-to-cart {
+    .btn-details, .add-to-cart, .next-btn {
       margin-top: 10px;
       padding: 8px 12px;
       border: none;
@@ -75,12 +63,9 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
-    .btn-details:hover,
-    .add-to-cart:hover {
+    .btn-details:hover, .add-to-cart:hover, .next-btn:hover {
       background-color: #444;
     }
-
     .product-details {
       margin-top: 10px;
       text-align: left;
@@ -89,32 +74,77 @@
       border-radius: 8px;
       border: 1px solid #ddd;
       display: none;
+      font-size: 0.9rem;
     }
-
     .product-details ul {
       padding-left: 20px;
+      margin: 0;
     }
-
     .product-details ul li::before {
       content: "✓ ";
       color: rgb(137, 138, 137);
       font-weight: bold;
     }
-
     .next-btn {
       display: block;
       margin: 30px auto;
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 16px;
-      background-color: #111;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      max-width: 300px;
+      border-radius: 6px;
     }
 
-    .next-btn:hover {
-      background-color: #333;
+    /* TOAST ESTILO NOVO */
+    #toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 320px;
+    }
+    .toast {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-left: 5px solid #111;
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+      color: #333;
+    }
+    .toast img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .toast-text {
+      font-size: 0.9rem;
+      line-height: 1.2;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
     }
   </style>
 </head>
@@ -126,9 +156,10 @@
     <a href="../pages/carrinho.html" class="cart-icon" title="Ver carrinho">🛒</a>
   </header>
 
+  <div id="toast-container"></div>
+
   <main>
     <div class="products-container">
-
       <div class="product-card">
         <img src="../assets/Intel-Core-i9-14900K.jpeg" alt="Intel Core i9-14900K">
         <h3>Intel Core i9-14900K</h3>
@@ -142,8 +173,7 @@
             <li>Núcleos/Threads: 24/32</li>
           </ul>
         </div>
-        <button class="add-to-cart"
-          onclick="adicionarAoCarrinho('Intel Core i9-14900K', 3500.00, '../assets/intel-core-i9-14900k.jpeg')">
+        <button class="add-to-cart" onclick="adicionarAoCarrinho('Intel Core i9-14900K', 3500.00, '../assets/Intel-Core-i9-14900K.jpeg')">
           Adicionar ao carrinho
         </button>
       </div>
@@ -161,19 +191,16 @@
             <li>Núcleos/Threads: 16/32</li>
           </ul>
         </div>
-        <button class="add-to-cart"
-          onclick="adicionarAoCarrinho('AMD Ryzen 9 7950X', 3300.00, '../assets/AMD-Ryzen-9-7950X.jpeg')">
+        <button class="add-to-cart" onclick="adicionarAoCarrinho('AMD Ryzen 9 7950X', 3300.00, '../assets/AMD-Ryzen-9-7950X.jpeg')">
           Adicionar ao carrinho
         </button>
       </div>
-
     </div>
 
     <button class="next-btn" onclick="window.location.href='placas-mae.html'">Avançar para Placas-Mãe</button>
   </main>
 
   <script>
-    // Mostrar/esconder detalhes
     const detailButtons = document.querySelectorAll('.btn-details');
     detailButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -184,22 +211,32 @@
       });
     });
 
-    // Adiciona ao carrinho com controle de quantidade
     function adicionarAoCarrinho(nome, preco, imagem) {
       let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
       const existente = carrinho.find(item => item.nome === nome);
-
       if (existente) {
         existente.quantidade++;
       } else {
         carrinho.push({ nome, preco, imagem, quantidade: 1 });
       }
-
       localStorage.setItem("carrinho", JSON.stringify(carrinho));
-      alert(`${nome} adicionado ao carrinho.`);
+      mostrarToast({ nome, imagem });
+    }
+
+    function mostrarToast(produto) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.classList.add('toast');
+      toast.innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}">
+        <div class="toast-text">
+          <strong>${produto.nome}</strong><br>
+          adicionado ao carrinho
+        </div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
     }
   </script>
-
 </body>
 </html>
-

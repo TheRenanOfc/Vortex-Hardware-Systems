@@ -39,6 +39,60 @@
     .next-btn:hover {
       background-color: #333;
     }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-left: 5px solid #111;
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+    }
+
+    .toast img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .toast-text {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
   </style>
 </head>
 <body>
@@ -78,6 +132,8 @@
     <p>&copy; 2025 Vortex Hardware Systems</p>
   </footer>
 
+  <div class="toast-container" id="toast-container"></div>
+
   <script>
     // Mostrar/esconder detalhes
     document.querySelectorAll('.btn-details').forEach(button => {
@@ -89,13 +145,28 @@
       });
     });
 
-    // Adicionar ao carrinho
+    // Adicionar ao carrinho com popup toast
     function adicionarAoCarrinho(nome, preco, imagem) {
       const item = { nome, preco, imagem, quantidade: 1 };
       let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
       carrinho.push(item);
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      alert(`${nome} adicionado ao carrinho!`);
+      mostrarToast(nome, imagem);
+    }
+
+    function mostrarToast(nome, imagem) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <img src="${imagem}" alt="${nome}">
+        <div class="toast-text"><strong>${nome}</strong><br>adicionado ao carrinho</div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
     }
   </script>
 </body>

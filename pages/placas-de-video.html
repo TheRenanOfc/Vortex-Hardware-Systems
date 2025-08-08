@@ -106,6 +106,55 @@
     .next-btn:hover {
       background-color: #333;
     }
+
+    /* Toast container */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-left: 5px solid #111;
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+    }
+    .toast img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .toast-text {
+      font-size: 0.9rem;
+      color: #333;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
   </style>
 </head>
 <body>
@@ -119,7 +168,7 @@
     <div class="products-container">
 
       <div class="product-card">
-        <img src="../assets/rtx4090.jpg" alt="GeForce RTX 4090">
+        <img src="../assets/rtx4090.jpg" alt="GeForce RTX 4090" />
         <h3>GeForce RTX 4090</h3>
         <button class="btn-details">Ver detalhes</button>
         <div class="product-details">
@@ -131,14 +180,16 @@
             <li>Consumo: 450W</li>
           </ul>
         </div>
-        <button class="add-to-cart"
-          onclick="adicionarAoCarrinho('GeForce RTX 4090', 15000.00, '../assets/rtx4090.jpg')">
+        <button
+          class="add-to-cart"
+          onclick="adicionarAoCarrinho('GeForce RTX 4090', 15000.00, '../assets/rtx4090.jpg')"
+        >
           Adicionar ao carrinho
         </button>
       </div>
 
       <div class="product-card">
-        <img src="../assets/rx7900xtx.jpg" alt="Radeon RX 7900 XTX">
+        <img src="../assets/rx7900xtx.jpg" alt="Radeon RX 7900 XTX" />
         <h3>Radeon RX 7900 XTX</h3>
         <button class="btn-details">Ver detalhes</button>
         <div class="product-details">
@@ -150,21 +201,27 @@
             <li>Consumo: 355W</li>
           </ul>
         </div>
-        <button class="add-to-cart"
-          onclick="adicionarAoCarrinho('Radeon RX 7900 XTX', 9500.00, '../assets/rx7900xtx.jpg')">
+        <button
+          class="add-to-cart"
+          onclick="adicionarAoCarrinho('Radeon RX 7900 XTX', 9500.00, '../assets/rx7900xtx.jpg')"
+        >
           Adicionar ao carrinho
         </button>
       </div>
 
     </div>
 
-    <button class="next-btn" onclick="window.location.href='armazenamento.html'">Avançar para Armazenamento</button>
+    <button class="next-btn" onclick="window.location.href='armazenamento.html'">
+      Avançar para Armazenamento
+    </button>
   </main>
+
+  <div class="toast-container" id="toast-container"></div>
 
   <script>
     // Toggle detalhes
     const detailButtons = document.querySelectorAll('.btn-details');
-    detailButtons.forEach(button => {
+    detailButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const details = button.nextElementSibling;
         const isVisible = details.style.display === 'block';
@@ -173,17 +230,32 @@
       });
     });
 
-    // Adicionar ao carrinho com controle de quantidade
+    // Adicionar ao carrinho com toast popup
     function adicionarAoCarrinho(nome, preco, imagem) {
       let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      const index = carrinho.findIndex(item => item.nome === nome);
-      if(index > -1) {
+      const index = carrinho.findIndex((item) => item.nome === nome);
+      if (index > -1) {
         carrinho[index].quantidade++;
       } else {
         carrinho.push({ nome, preco, imagem, quantidade: 1 });
       }
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      alert(`${nome} adicionado ao carrinho! Quantidade: ${carrinho[index > -1 ? index : carrinho.length - 1].quantidade}`);
+      mostrarToast(nome, imagem);
+    }
+
+    function mostrarToast(nome, imagem) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <img src="${imagem}" alt="${nome}">
+        <div class="toast-text"><strong>${nome}</strong><br>adicionado ao carrinho</div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
     }
   </script>
 </body>
