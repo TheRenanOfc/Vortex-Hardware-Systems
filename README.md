@@ -58,7 +58,7 @@ Acesse o projeto publicado via GitHub Pages:
 
 ---
 
-## 🎯 Público-Alvo
+## 👥 Público-Alvo
 
 O projeto é voltado tanto para fins acadêmicos quanto para aqueles que desejam compreender, na prática, como construir uma estrutura de e-commerce básica com recursos interativos, sem a utilização de frameworks ou bibliotecas complexas.
 
